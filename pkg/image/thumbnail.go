@@ -17,7 +17,8 @@ import (
 	"github.com/stashapp/stash/pkg/models"
 )
 
-const ffmpegImageQuality = 5
+// Lower q:v values are higher quality for ffmpeg's MJPEG encoder.
+const ffmpegImageQuality = 1
 
 var vipsPath string
 var once sync.Once

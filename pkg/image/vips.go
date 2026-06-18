@@ -11,11 +11,13 @@ import (
 
 type vipsEncoder string
 
+const vipsJpegThumbnailOptions = ".jpg[Q=95,strip]"
+
 func (e *vipsEncoder) ImageThumbnail(image *bytes.Buffer, maxSize int) ([]byte, error) {
 	args := []string{
 		"thumbnail_source",
 		"[descriptor=0]",
-		".jpg[Q=70,strip]",
+		vipsJpegThumbnailOptions,
 		fmt.Sprint(maxSize),
 		"--size", "down",
 	}
@@ -29,11 +31,11 @@ func (e *vipsEncoder) ImageThumbnail(image *bytes.Buffer, maxSize int) ([]byte, 
 // which stdin cannot provide.
 func (e *vipsEncoder) ImageThumbnailPath(path string, maxSize int) ([]byte, error) {
 	// vips thumbnail syntax: thumbnail input output width [options]
-	// Using .jpg[Q=70,strip] as output writes to stdout
+	// Using the JPEG output option writes to stdout.
 	args := []string{
 		"thumbnail",
 		path,
-		".jpg[Q=70,strip]",
+		vipsJpegThumbnailOptions,
 		fmt.Sprint(maxSize),
 		"--size", "down",
 	}
